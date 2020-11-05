@@ -36,8 +36,8 @@ pipeline {
 	                        nexusUrl: NEXUS_URL,
 	                        groupId: GROUP_ID,
 	                        version: '0.0.1-SNAPSHOT',
-	                        repository: 'jenkins-release',
-	                        credentialsId: 'nexus-jenkins',
+	                        repository: NEXUS_REPOSITORY,
+	                        credentialsId: NEXUS_CREDENTIAL_ID,
 	                        artifacts: [
 	                            [artifactId: ARTIFACT_ID,
 	                            classifier: '',
