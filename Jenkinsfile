@@ -38,7 +38,7 @@ pipeline {
 			          "files": [
 			            {
 			              "pattern": "build/libs/*",
-			              "target": "local/froggy-files/"
+			              "target": "jenkins/"
 			            }
 			         ]
 			    }''',
