@@ -25,7 +25,23 @@ pipeline {
 		stage('Nexus') {
             steps {
                 script {
-                	echo "Upload here"
+                	echo "Upload here";
+                	nexusArtifactUploader(
+                        nexusVersion: 'nexus3',
+                        protocol: 'http',
+                        nexusUrl: 'andres-mbp.fritz.box:8081',
+                        groupId: 'de.andre.springboot',
+                        version: '0.0.1',
+                        repository: 'jenkins-snapshot',
+                        credentialsId: 'nexus-jenkins',
+                        artifacts: [
+                            [artifactId: 'springboot-jenkins',
+                            classifier: '',
+                            file: 'build/libs/springboot-jenkins.jar',
+                            type: 'jar']
+                        ]
+                    );
+                	
                 /*
                     filesByGlob = findFiles(glob: "build/libs/*.jar");
                     artifactPath = filesByGlob[0].path;
