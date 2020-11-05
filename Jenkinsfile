@@ -38,7 +38,7 @@ pipeline {
 			          "files": [
 			            {
 			              "pattern": "build/libs/*",
-			              "target": "bazinga-repo/froggy-files/"
+			              "target": "local/froggy-files/"
 			            }
 			         ]
 			    }''',
