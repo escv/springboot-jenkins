@@ -32,7 +32,7 @@ pipeline {
                         nexusUrl: 'andres-mbp.fritz.box:8081',
                         groupId: 'de.andre.springboot',
                         version: '0.0.1',
-                        repository: 'jenkins-snapshot',
+                        repository: 'jenkins-release',
                         credentialsId: 'nexus-jenkins',
                         artifacts: [
                             [artifactId: 'springboot-jenkins',
