@@ -43,7 +43,6 @@ pipeline {
                             repository: NEXUS_REPOSITORY,
                             credentialsId: NEXUS_CREDENTIAL_ID,
                             artifacts: [
-                                // Artifact generated such as .jar, .ear and .war files.
                                 [artifactId: ARTIFACT_ID,
                                 classifier: '',
                                 file: artifactPath,
@@ -58,25 +57,5 @@ pipeline {
             }
         }
     }
-    /*
-    post {
-        always {
-        	rtUpload (
-			    serverId: 'local',
-			    spec: '''{
-			          "files": [
-			            {
-			              "pattern": "build/libs/*",
-			              "target": "jenkins/"
-			            }
-			         ]
-			    }''',
-			 
-			    buildName: 'holyFrog',
-			    buildNumber: '42'
-			)
-            //archiveArtifacts artifacts: 'build/libs/*', fingerprint: true
-        }
-    }
-    */
+
 }
