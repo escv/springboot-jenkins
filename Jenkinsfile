@@ -23,26 +23,6 @@ pipeline {
             }
         }
 
-         stage("publish to nexus") {
-            steps {
-                script {
-                    // Rhttps://dzone.com/articles/jenkins-publish-maven-artifacts-to-nexus-oss-using
-
-                    filesByGlob = findFiles(glob: "build/libs/*.jar");
-                    artifactPath = filesByGlob[0].path;
-                    artifactExists = fileExists artifactPath;
-                    if(artifactExists) {
-                        echo "*** ${NEXUS_VERSION} File: ${artifactPath}, group: ${GROUP_ID}, artifact ${ARTIFACT_ID}";
-​
-                        
-                        echo "Published"
-​
-                    } else {
-                        echo "Oje";
-                    }
-                }
-            }
-        }
     }
 
 }
