@@ -1,0 +1,21 @@
+repositories {
+    mavenCentral()
+}
+
+buildscript {
+    repositories {
+      maven {
+        url "https://plugins.gradle.org/m2/"
+      }
+    }
+    dependencies {
+        classpath('org.springframework.boot:spring-boot-gradle-plugin:2.3.0.RELEASE')
+    }
+}
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+dependencies {
+	implementation('org.springframework.boot:spring-boot-starter-web')
+}

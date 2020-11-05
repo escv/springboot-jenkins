@@ -1,0 +1,15 @@
+server:
+  port: 8181
+
+#TODO: figure out why I need this here and in bootstrap.yml
+spring:
+  application:
+    name: springboot-jenkins
+
+endpoints:
+  health:
+    sensitive: false
+  restart:
+    enabled: true
+  shutdown:
+    enabled: true
