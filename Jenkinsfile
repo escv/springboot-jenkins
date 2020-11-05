@@ -32,16 +32,16 @@ pipeline {
                     artifactPath = filesByGlob[0].path;
                     artifactExists = fileExists artifactPath;
                     if(artifactExists) {
-                        echo "*** File: ${artifactPath}, group: ${GROUP_ID}, artifact ${ARTIFACT_ID}";
+                        echo "*** ${NEXUS_VERSION} File: ${artifactPath}, group: ${GROUP_ID}, artifact ${ARTIFACT_ID}";
 ​
                         nexusArtifactUploader(
                             nexusVersion: NEXUS_VERSION,
-                            protocol: NEXUS_PROTOCOL,
-                            nexusUrl: NEXUS_URL,
+                            protocol: 'http',
+                            nexusUrl: 'andres-mbp.fritz.box:8081',
                             groupId: 'de.andre.springboot',
                             version: '0.0.1-SNAPSHOT',
-                            repository: 'nexus-jenkins',
-                            credentialsId: NEXUS_CREDENTIAL_ID,
+                            repository: 'jenkins-snapshot',
+                            credentialsId: 'nexus-jenkins',
                             artifacts: [
                                 [artifactId: ARTIFACT_ID,
                                 classifier: '',
@@ -49,9 +49,10 @@ pipeline {
                                 type: 'jar']
                             ]
                         );
+                        echo "*** Published"
 ​
                     } else {
-                        error "*** File: could not be found";
+                        echo "Oje";
                     }
                 }
             }
