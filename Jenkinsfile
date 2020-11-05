@@ -26,47 +26,26 @@ pipeline {
             steps {
                 script {
                 	echo "Upload here";
-                	nexusArtifactUploader(
-                        nexusVersion: 'nexus3',
-                        protocol: 'http',
-                        nexusUrl: 'andres-mbp.fritz.box:8081',
-                        groupId: 'de.andre.springboot',
-                        version: '0.0.1',
-                        repository: 'jenkins-release',
-                        credentialsId: 'nexus-jenkins',
-                        artifacts: [
-                            [artifactId: 'springboot-jenkins',
-                            classifier: '',
-                            file: 'build/libs/springboot-jenkins.jar',
-                            type: 'jar']
-                        ]
-                    );
-                	
-                /*
-                    filesByGlob = findFiles(glob: "build/libs/*.jar");
+                	filesByGlob = findFiles(glob: "build/libs/*.jar");
                     artifactPath = filesByGlob[0].path;
                     artifactExists = fileExists artifactPath;
                     if(artifactExists) {
-                        echo "${NEXUS_VERSION} File: ${artifactPath}, group: ${GROUP_ID}, artifact ${ARTIFACT_ID}";
-​
-                        nexusArtifactUploader(
-                            nexusVersion: 'nexus3',
-                            protocol: 'http',
-                            nexusUrl: 'andres-mbp.fritz.box:8081',
-                            groupId: 'de.andre.springboot',
-                            version: '0.0.1-SNAPSHOT',
-                            repository: 'jenkins-snapshot',
-                            credentialsId: 'nexus-jenkins',
-                            artifacts: [
-                                [artifactId: 'springboot-jenkins',
-                                classifier: '',
-                                file: 'build/libs/springboot-jenkins.jar',
-                                type: 'jar']
-                            ]
-                        );
-                        echo "Published";
+	                	nexusArtifactUploader(
+	                        nexusVersion: NEXUS_VERSION,
+	                        protocol: NEXUS_PROTOCOL,
+	                        nexusUrl: NEXUS_URL,
+	                        groupId: GROUP_ID,
+	                        version: '0.0.1-SNAPSHOT',
+	                        repository: 'jenkins-release',
+	                        credentialsId: 'nexus-jenkins',
+	                        artifacts: [
+	                            [artifactId: ARTIFACT_ID,
+	                            classifier: '',
+	                            file: artifactPath,
+	                            type: 'jar']
+	                        ]
+	                    );
                     }
-                */
                 }
             }
         }
