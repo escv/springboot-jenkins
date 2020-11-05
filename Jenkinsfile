@@ -13,8 +13,8 @@ pipeline {
 		NEXUS_URL = "andres-mbp.fritz.box:8081"
 		NEXUS_REPOSITORY = "jenkins-snapshot"
 		NEXUS_CREDENTIAL_ID = "nexus-jenkins"
-		pom.groupId = "de.andre.springboot"
-		pom.artifactId = "springboot-jenkins"
+		GROUP_ID = "de.andre.springboot"
+		ARTIFACT_ID = "springboot-jenkins"
     }
     stages {
         stage('Build') {
@@ -38,13 +38,13 @@ pipeline {
                             nexusVersion: NEXUS_VERSION,
                             protocol: NEXUS_PROTOCOL,
                             nexusUrl: NEXUS_URL,
-                            groupId: pom.groupId,
-                            version: pom.version,
+                            groupId: GROUP_ID,
+                            version: '0.0.1-SNAPSHOT',
                             repository: NEXUS_REPOSITORY,
                             credentialsId: NEXUS_CREDENTIAL_ID,
                             artifacts: [
                                 // Artifact generated such as .jar, .ear and .war files.
-                                [artifactId: pom.artifactId,
+                                [artifactId: ARTIFACT_ID,
                                 classifier: '',
                                 file: artifactPath,
                                 type: 'jar'],
