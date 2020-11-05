@@ -38,9 +38,9 @@ pipeline {
                             nexusVersion: NEXUS_VERSION,
                             protocol: NEXUS_PROTOCOL,
                             nexusUrl: NEXUS_URL,
-                            groupId: GROUP_ID,
+                            groupId: 'de.andre.springboot',
                             version: '0.0.1-SNAPSHOT',
-                            repository: NEXUS_REPOSITORY,
+                            repository: 'nexus-jenkins',
                             credentialsId: NEXUS_CREDENTIAL_ID,
                             artifacts: [
                                 [artifactId: ARTIFACT_ID,
@@ -51,7 +51,7 @@ pipeline {
                         );
 ​
                     } else {
-                        error "*** File: ${artifactPath}, could not be found";
+                        error "*** File: could not be found";
                     }
                 }
             }
