@@ -35,7 +35,7 @@ pipeline {
                         echo "*** ${NEXUS_VERSION} File: ${artifactPath}, group: ${GROUP_ID}, artifact ${ARTIFACT_ID}";
 ​
                         nexusArtifactUploader(
-                            nexusVersion: NEXUS_VERSION,
+                            nexusVersion: 'nexus3',
                             protocol: 'http',
                             nexusUrl: 'andres-mbp.fritz.box:8081',
                             groupId: 'de.andre.springboot',
@@ -43,13 +43,13 @@ pipeline {
                             repository: 'jenkins-snapshot',
                             credentialsId: 'nexus-jenkins',
                             artifacts: [
-                                [artifactId: ARTIFACT_ID,
+                                [artifactId: 'springboot-jenkins',
                                 classifier: '',
-                                file: artifactPath,
+                                file: 'build/libs/springboot-jenkins.jar',
                                 type: 'jar']
                             ]
-                        );
-                        echo "*** Published"
+                        )
+                        echo "Published"
 ​
                     } else {
                         echo "Oje";
