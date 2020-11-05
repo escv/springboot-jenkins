@@ -34,21 +34,7 @@ pipeline {
                     if(artifactExists) {
                         echo "*** ${NEXUS_VERSION} File: ${artifactPath}, group: ${GROUP_ID}, artifact ${ARTIFACT_ID}";
 ​
-                        nexusArtifactUploader(
-                            nexusVersion: 'nexus3',
-                            protocol: 'http',
-                            nexusUrl: 'andres-mbp.fritz.box:8081',
-                            groupId: 'de.andre.springboot',
-                            version: '0.0.1-SNAPSHOT',
-                            repository: 'jenkins-snapshot',
-                            credentialsId: 'nexus-jenkins',
-                            artifacts: [
-                                [artifactId: 'springboot-jenkins',
-                                classifier: '',
-                                file: 'build/libs/springboot-jenkins.jar',
-                                type: 'jar']
-                            ]
-                        )
+                        
                         echo "Published"
 ​
                     } else {
