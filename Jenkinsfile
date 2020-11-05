@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'openjdk:11-jdk-slim'
+            image 'gradle:jdk11'
             args '-p 3000:3000'
         }
     }
@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh './gradlew build --no-daemon'
+                sh './gradle build --no-daemon'
             }
         }
         //stage('dist') {
@@ -30,9 +30,9 @@ pipeline {
         //    }
         //}
     }
-    //post {
-    //    always {
-    //        archiveArtifacts artifacts: 'dist/angular-jenkins/*', fingerprint: true
-    //    }
-    //}
+    post {
+        always {
+            archiveArtifacts artifacts: 'build/libs/*', fingerprint: true
+        }
+    }
 }
