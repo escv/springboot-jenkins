@@ -8,6 +8,13 @@ pipeline {
     environment {
         CI = 'true'
         HOME = '.'
+        NEXUS_VERSION = "nexus3"
+		NEXUS_PROTOCOL = "http"
+		NEXUS_URL = "andres-mbp.fritz.box:8081"
+		NEXUS_REPOSITORY = "jenkins-snapshot"
+		NEXUS_CREDENTIAL_ID = "nexus-jenkins"
+		pom.groupId = "de.andre.springboot"
+		pom.artifactId = "springboot-jenkins"
     }
     stages {
         stage('Build') {
@@ -15,21 +22,49 @@ pipeline {
                 sh 'gradle build --no-daemon'
             }
         }
-        //stage('dist') {
-        //    steps {
-        //        sh 'npm run build'
-        //    }
-        //}
-        //stage('docker') {
-        //    agent {
-        //        label 'master'
-        //    }
-        //    steps {
-        //        sh 'docker build . -t angular-jenkins:latest'
-        //        sh 'docker run -d -p 80:80 angular-jenkins:latest'
-        //    }
-        //}
+
+         stage("publish to nexus") {
+            steps {
+                script {
+                    // Rhttps://dzone.com/articles/jenkins-publish-maven-artifacts-to-nexus-oss-using
+
+                    filesByGlob = findFiles(glob: "build/libs/*.jar");
+                    artifactPath = filesByGlob[0].path;
+                    artifactExists = fileExists artifactPath;
+                    if(artifactExists) {
+                        echo "*** File: ${artifactPath}, group: ${pom.groupId}, packaging: ${pom.packaging}, version ${pom.version}";
+​
+                        nexusArtifactUploader(
+                            nexusVersion: NEXUS_VERSION,
+                            protocol: NEXUS_PROTOCOL,
+                            nexusUrl: NEXUS_URL,
+                            groupId: pom.groupId,
+                            version: pom.version,
+                            repository: NEXUS_REPOSITORY,
+                            credentialsId: NEXUS_CREDENTIAL_ID,
+                            artifacts: [
+                                // Artifact generated such as .jar, .ear and .war files.
+                                [artifactId: pom.artifactId,
+                                classifier: '',
+                                file: artifactPath,
+                                type: 'jar'],
+​
+                                // Lets upload the pom.xml file for additional information for Transitive dependencies
+                                //[artifactId: pom.artifactId,
+                                //classifier: '',
+                                //file: "pom.xml",
+                                //type: "pom"]
+                            ]
+                        );
+​
+                    } else {
+                        error "*** File: ${artifactPath}, could not be found";
+                    }
+                }
+            }
+        }
     }
+    /*
     post {
         always {
         	rtUpload (
@@ -43,14 +78,11 @@ pipeline {
 			         ]
 			    }''',
 			 
-			    // Optional - Associate the uploaded files with the following custom build name and build number,
-			    // as build artifacts.
-			    // If not set, the files will be associated with the default build name and build number (i.e the
-			    // the Jenkins job name and number).
 			    buildName: 'holyFrog',
 			    buildNumber: '42'
 			)
             //archiveArtifacts artifacts: 'build/libs/*', fingerprint: true
         }
     }
+    */
 }
